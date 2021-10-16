@@ -1215,59 +1215,6 @@ class MyAbcSequence(abc.Sequence):
 * **Names of their required methods are stored in `'<abc>.__abstractmethods__'`.**
 
 
-Enum
-----
-```python
-from enum import Enum, auto
-```
-
-```python
-class <enum_name>(Enum):
-    <member_name_1> = <value_1>
-    <member_name_2> = <value_2_a>, <value_2_b>
-    <member_name_3> = auto()
-```
-* **If there are no numeric values before auto(), it returns 1.**
-* **Otherwise it returns an increment of the last numeric value.**
-
-```python
-<member> = <enum>.<member_name>                 # Returns a member.
-<member> = <enum>['<member_name>']              # Returns a member or raises KeyError.
-<member> = <enum>(<value>)                      # Returns a member or raises ValueError.
-<str>    = <member>.name                        # Returns member's name.
-<obj>    = <member>.value                       # Returns member's value.
-```
-
-```python
-list_of_members = list(<enum>)
-member_names    = [a.name for a in <enum>]
-member_values   = [a.value for a in <enum>]
-random_member   = random.choice(list(<enum>))
-```
-
-```python
-def get_next_member(member):
-    members = list(member.__class__)
-    index   = (members.index(member) + 1) % len(members)
-    return members[index]
-```
-
-### Inline
-```python
-Cutlery = Enum('Cutlery', 'fork knife spoon')
-Cutlery = Enum('Cutlery', ['fork', 'knife', 'spoon'])
-Cutlery = Enum('Cutlery', {'fork': 1, 'knife': 2, 'spoon': 3})
-```
-
-#### User-defined functions cannot be values, so they must be wrapped:
-```python
-from functools import partial
-LogicOp = Enum('LogicOp', {'AND': partial(lambda l, r: l and r),
-                           'OR':  partial(lambda l, r: l or r)})
-```
-* **Member names are in all caps because trying to access a member that is named after a reserved keyword raises SyntaxError.**
-
-
 Exceptions
 ----------
 ### Basic Example
